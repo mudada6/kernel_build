@@ -33,7 +33,7 @@ jobs:
           cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
           cp out/arch/arm64/boot/dtbo.img AnyKernel3/
           cd AnyKernel3
-          VERSION="$(cat ../kernel_xiaomi_sm8250/arch/arm64/configs/alioth_defconfig | grep "CONFIG_LOCALVERSION\=" | sed -r 's/.*"(.+)".*/\1/' | sed 's/^.//')"
+          VERSION="$(cat ../kernel_xiaomi_sm8250/arch/arm64/configs/vendor/alioth_defconfig | grep "CONFIG_LOCALVERSION\=" | sed -r 's/.*"(.+)".*/\1/' | sed 's/^.//')"
           7z a -mx9 ${VERSION}.zip *
           zipalign -v 4 ${VERSION}.zip ../${VERSION}_cmi.zip
           cd ..
