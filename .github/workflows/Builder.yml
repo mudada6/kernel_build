@@ -18,11 +18,10 @@ jobs:
           git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 --depth=1
           mv linux-x86/clang-r416183c clang
           rm -rf linux-x86
-          git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b main
       - name: 构建和上传内核
         run: |
           BOARD=lmi
-          if [ $DEVICE == alioth ]; then
+          if [ ["$DEVICE" == alioth] ]; then
                     git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b vab
           else
                     git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b main
