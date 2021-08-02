@@ -22,6 +22,11 @@ jobs:
       - name: 构建和上传内核
         run: |
           BOARD=lmi
+          if [ $DEVICE == alioth ]; then
+                    git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b vab
+          else
+                    git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b main
+          fi
           CLANG_DIR=../clang
           export KBUILD_BUILD_USER="zclkkk"
           export KBUILD_BUILD_HOST="Server"
