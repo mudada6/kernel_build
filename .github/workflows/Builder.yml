@@ -38,4 +38,4 @@ jobs:
           zipalign -v 4 ${VERSION}.zip ../${VERSION}_lmi.zip
           cd ..
           curl -sL https://git.io/file-transfer | bash -s beta
-          ./transfer wet ${VERSION}_cmi.zip
+          ./transfer wet ${VERSION}_lmi.zip
