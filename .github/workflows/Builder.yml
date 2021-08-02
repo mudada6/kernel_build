@@ -20,7 +20,7 @@ jobs:
           rm -rf linux-x86
       - name: 构建和上传内核
         run: |
-          BOARD=lmi
+          BOARD=alioth
           if [ ["$BOARD" == alioth] ]; then
                     git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b vab
           else
