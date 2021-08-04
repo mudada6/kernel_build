@@ -14,30 +14,26 @@ jobs:
           sudo apt-get install -y zipalign openssl ccache bc bash git-core gnupg build-essential zip curl make automake autogen autoconf autotools-dev libtool shtool python  m4 gcc libtool zlib1g-dev flex libssl-dev gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi python2
       - name: 拉取源代码和工具链
         run: |
-          git clone https://oauth2:${{ secrets.TOKEN }}@github.com/zclkkk/msm-4.19.git --depth=1 kernel_xiaomi_sm8250 -b main
+          git clone https://oauth2:${{ secrets.TOKEN }}@github.com/zclkkk/msm-4.14.git --depth=1 -b main
           git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 --depth=1
           mv linux-x86/clang-r416183c clang
           rm -rf linux-x86
       - name: 构建和上传内核
         run: |
-          BOARD=alioth
-          if [ ["$BOARD" == alioth] ]; then
-                    git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b vab
-          else
-                    git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b main
-          fi
+          BOARD=raphael
+          git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b main
           CLANG_DIR=../clang
           export KBUILD_BUILD_USER="zclkkk"
           export KBUILD_BUILD_HOST="Server"
           args="O=../out ARCH=arm64 CC=${CLANG_DIR}/bin/clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LD=${CLANG_DIR}/bin/ld.lld"
-          cd kernel_xiaomi_sm8250
+          cd msm-4.14
           make ${args} ${BOARD}_defconfig
-          make -j$(nproc --all) ${args}
+          make -j16 ${args}
           cd ..
           cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
           cp out/arch/arm64/boot/dtbo.img AnyKernel3/
           cd AnyKernel3
-          VERSION="$(cat ../kernel_xiaomi_sm8250/arch/arm64/configs/${BOARD}_defconfig | grep "CONFIG_LOCALVERSION\=" | sed -r 's/.*"(.+)".*/\1/' | sed 's/^.//')"
+          VERSION="$(cat ../msm-4.14/arch/arm64/configs/${BOARD}_defconfig | grep "CONFIG_LOCALVERSION\=" | sed -r 's/.*"(.+)".*/\1/' | sed 's/^.//')"
           VERSION=KneipKernel_BETA
           7z a -mx9 ${VERSION}.zip *
           zipalign -v 4 ${VERSION}.zip ../${VERSION}_${BOARD}.zip
