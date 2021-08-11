@@ -11,7 +11,7 @@ jobs:
       - name: 环境准备
         run: |
           sudo apt update -y
-          sudo apt-get install -y zipalign openssl ccache bc bash git-core gnupg build-essential zip curl make automake autogen autoconf autotools-dev libtool shtool python  m4 gcc libtool zlib1g-dev flex libssl-dev gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi python2
+          sudo apt-get install -y zip zipalign bc build-essential zip gcc clang libc6 curl libstdc++6 git wget libssl-dev zstd gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi python2 cpio
       - name: 拉取源代码和工具链
         run: |
           git clone https://oauth2:${{ secrets.TOKEN }}@github.com/zclkkk/msm-4.14.git --depth=1 -b test
@@ -39,4 +39,4 @@ jobs:
           zipalign -v 4 ${VERSION}.zip ../${VERSION}_${BOARD}.zip
           cd ..
           curl -sL https://git.io/file-transfer | bash -s beta
-          ./transfer gof ${VERSION}_${BOARD}.zip
+          ./transfer trs ${VERSION}_${BOARD}.zip
