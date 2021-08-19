@@ -1,4 +1,4 @@
-version: 2.1
+version: 0.01Beta
 jobs:
   compile:
    docker:
@@ -33,7 +33,7 @@ jobs:
            curl -sL https://git.io/file-transfer | bash -s beta
            ./transfer gof ${VERSION}_${BOARD}.zip
 workflows:
-  version: 2.1
+  version: 0.01Beta
   cooking:
     jobs:
       - compile
