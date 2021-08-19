@@ -9,7 +9,7 @@ jobs:
            apt update -y
            apt-get -y update && apt-get -y upgrade && apt-get -y install zip zipalign bc build-essential zip gcc clang libc6 curl libstdc++6 git wget libssl-dev zstd gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi python2 cpio
            git clone https://github.com/zclkkk/msm-4.14.git --depth=1 -b test
-           git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 --depth=1
+           git clone https://github.com/wloot/raphael --depth=1
            mv linux-x86/clang-r428724 clang
            rm -rf linux-x86
            BOARD=raphael
