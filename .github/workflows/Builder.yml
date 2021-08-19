@@ -1,4 +1,4 @@
-name: 构建Kneip内核
+name: 构建Tada内核
 
 on:
   watch:
@@ -15,7 +15,7 @@ jobs:
       - name: 拉取源代码和工具链
         run: |
           git clone https://oauth2:${{ secrets.TOKEN }}@github.com/zclkkk/msm-4.14.git --depth=1 -b main
-          git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 --depth=1
+          git clone https://github.com/wloot/raphael --depth=1
           mv linux-x86/clang-r428724 clang
           rm -rf linux-x86
       - name: 构建和上传内核
@@ -23,8 +23,8 @@ jobs:
           BOARD=raphael
           git clone --depth=1 https://github.com/zclkkk/AnyKernel3 -b main
           CLANG_DIR=../clang
-          export KBUILD_BUILD_USER="zclkkk"
-          export KBUILD_BUILD_HOST="Server"
+          export KBUILD_BUILD_USER="mudada"
+          export KBUILD_BUILD_HOST="TestKernel"
           args="O=../out ARCH=arm64 CC=${CLANG_DIR}/bin/clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LD=${CLANG_DIR}/bin/ld.lld"
           cd msm-4.14
           make ${args} ${BOARD}_defconfig
@@ -34,7 +34,7 @@ jobs:
           cp out/arch/arm64/boot/dtbo.img AnyKernel3/
           cd AnyKernel3
           VERSION="$(cat ../msm-4.14/arch/arm64/configs/${BOARD}_defconfig | grep "CONFIG_LOCALVERSION\=" | sed -r 's/.*"(.+)".*/\1/' | sed 's/^.//')"
-          VERSION=KneipKernel_BETA
+          VERSION=TadaKernel_BETA
           7z a -mx9 ${VERSION}.zip *
           zipalign -v 4 ${VERSION}.zip ../${VERSION}_${BOARD}.zip
           cd ..
