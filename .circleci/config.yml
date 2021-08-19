@@ -25,8 +25,8 @@ jobs:
            cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
            cp out/arch/arm64/boot/dtbo.img AnyKernel3/
            cd AnyKernel3
-           VERSION="$(cat ../msm-4.14/arch/arm64/configs/${BOARD}_defconfig | grep "CONFIG_LOCALVERSION\=" | sed -r 's/.*"(.+)".*/\1/' | sed 's/^.//')"
-           VERSION=KneipKernel_BETA
+           VERSION="$(cat ../msm-4./arch/arm64/configs/${BOARD}_defconfig | grep "CONFIG_LOCALVERSION\=" | sed -r 's/.*"(.+)".*/\1/' | sed 's/^.//')"
+           VERSION=TadaKernel_BETA
            7z a -mx9 ${VERSION}.zip *
            zipalign -v 4 ${VERSION}.zip ../${VERSION}_${BOARD}.zip
            cd ..
