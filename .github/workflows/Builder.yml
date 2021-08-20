@@ -15,7 +15,7 @@ jobs:
       - name: 拉取源代码和工具链
         run: |
           git clone https://oauth2:${{ secrets.TOKEN }}@github.com/zclkkk/msm-4.14.git --depth=1 -b main
-          git clone https://github.com/wloot/raphael --depth=1
+          git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 --depth=1
           mv linux-x86/clang-r428724 clang
           rm -rf linux-x86
       - name: 构建和上传内核
